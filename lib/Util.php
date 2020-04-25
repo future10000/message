@@ -13,12 +13,9 @@ use yii\helpers\VarDumper;
 
 class Util
 {
-    //todo 此文件在worker启动之前应用加载，所以reload会无效
     public static function eventSend($event, array $data = [])
     {
-        $ret = [
-            'event' => $event,
-        ];
+        $ret['event'] = $event;
 
         if ($event === Event::ERROR) {
             foreach ($data as $item) {

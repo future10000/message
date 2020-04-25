@@ -16,9 +16,9 @@ use \GatewayWorker\Gateway;
 use \app\lib\Util;
 
 // 自动加载类
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$workmanConfig = Util::config('params.workman');
+$workmanConfig = config('params.workman');
 // gateway 进程，这里使用Text协议，可以用telnet测试
 $gateway = new Gateway("Websocket://0.0.0.0:" . $workmanConfig['gateway']['port']);
 // gateway名称，status方便查看

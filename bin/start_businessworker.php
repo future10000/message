@@ -12,17 +12,29 @@
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
 use \Workerman\Worker;
-use \GatewayWorker\Register;
+use \GatewayWorker\BusinessWorker;
+use \app\core\Application;
 use \app\lib\Util;
 
 // 自动加载类
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 
-$registerAddress = explode(':', Util::config('params.workman.register.address'));
-// register 必须是text协议
-$register = new Register('text://0.0.0.0:' . $registerAddress[1]);
+$config = config();
 
-unset($registerAddress);
+// bussinessWorker 进程
+$worker = new BusinessWorker();
+// worker名称
+$worker->name = $config['params']['workman']['worker']['name'];
+// bussinessWorker进程数量
+$worker->count = $config['params']['workman']['worker']['count'];
+// 服务注册地址
+$worker->registerAddress = $config['params']['workman']['register']['address'];
+
+$worker->eventHandler = 'Message';
+
+(new Application($config));
+unset($config);
 
 // 如果不是在根目录启动，则运行runAll方法
 if(!defined('GLOBAL_START'))

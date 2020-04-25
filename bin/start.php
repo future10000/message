@@ -27,7 +27,7 @@ if(!extension_loaded('posix'))
 // 标记是全局启动
 define('GLOBAL_START', 1);
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 foreach(glob(__DIR__.'/start_*.php') as $start_file)
 {
