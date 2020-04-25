@@ -1,0 +1,15 @@
+{
+    "require": {
+        "workerman/gateway-worker" : ">=3.0.0",
+        "workerman/mysql": "^1.0",
+        "workerman/http-client": "^0.1.4",
+	    "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-redis": "^2.0",
+        "apache/log4php": "2.3.0"
+    },
+    "autoload":{
+        "psr-4":{
+            "app\\":"./"
+        }
+    }
+}
