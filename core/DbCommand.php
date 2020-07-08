@@ -59,14 +59,25 @@ class DbCommand extends Command
      */
     private function handleException(\Exception $e)
     {
-        $offset = stripos($e->getMessage(),'MySQL server has gone away');
-        if(($e instanceof \yii\db\Exception) == false OR $offset === false) {
-            return false;
+        if ($e instanceof \yii\db\Exception) {
+            if (in_array($e->errorInfo[1], [2006, 2013])) {
+                $this->trigger(static::EVENT_DISCONNECT);
+                $this->db->close();
+                \Yii::$app->blog->info('数据库重连...');
+                $this->db->open();
+                $this->pdoStatement = null;
+
+                return true;
+            }
         }
 
-        $this->trigger(static::EVENT_DISCONNECT);
+        return false;
+    }
 
-        $this->db->close();
-        return true;
+    protected function bindPendingParams()
+    {
+        foreach ($this->pendingParams as $name => $value) {
+            $this->pdoStatement->bindValue($name, $value[0], $value[1]);
+        }
     }
 }
