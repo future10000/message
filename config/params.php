@@ -14,6 +14,9 @@ return [
         'worker' => [
             'name' => 'jyeduWork',
             'count' => 1
+        ],
+        'globaldata' => [
+            //'127.0.0.1:2207'
         ]
     ],
     'log4' => [
